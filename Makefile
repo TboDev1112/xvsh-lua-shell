@@ -17,7 +17,8 @@ SRCS    := $(SRCDIR)/main.c \
            $(SRCDIR)/parser.c \
            $(SRCDIR)/executor.c \
            $(SRCDIR)/builtins.c \
-           $(SRCDIR)/lua_config.c
+           $(SRCDIR)/lua_config.c \
+           $(SRCDIR)/completion.c
 OBJS    := $(SRCS:.c=.o)
 
 # Flags
@@ -47,6 +48,7 @@ $(SRCDIR)/executor.o:   $(SRCDIR)/xvsh.h $(SRCDIR)/lexer.h $(SRCDIR)/parser.h \
                         $(SRCDIR)/executor.h $(SRCDIR)/builtins.h $(SRCDIR)/lua_config.h
 $(SRCDIR)/builtins.o:   $(SRCDIR)/xvsh.h $(SRCDIR)/builtins.h $(SRCDIR)/lua_config.h
 $(SRCDIR)/lua_config.o: $(SRCDIR)/xvsh.h $(SRCDIR)/lua_config.h
+$(SRCDIR)/completion.o: $(SRCDIR)/completion.h
 
 # ── Install ────────────────────────────────────────────────────────
 PREFIX  ?= /usr/local

@@ -26,6 +26,7 @@
 #include "executor.h"
 #include "builtins.h"
 #include "lua_config.h"
+#include "completion.h"
 
 /* ── Global shell state ───────────────────────────────────────── */
 ShellState shell;
@@ -195,6 +196,10 @@ int main(int argc, char *argv[])
         rl_initialize();
         using_history();
 
+        /* Set up ghost-text completion (reads/writes ~/xvsh/command.db) */
+        completion_init();
+        completion_setup();
+
         /* Optional: load persistent history */
         const char *home = getenv("HOME");
         char hist_file[PATH_MAX] = {0};
@@ -217,6 +222,7 @@ int main(int argc, char *argv[])
 
             if (*line) {
                 add_history(line);
+                db_record(line);       /* persist to ~/xvsh/command.db */
                 execute_line(&shell, line);
             }
             free(line);
